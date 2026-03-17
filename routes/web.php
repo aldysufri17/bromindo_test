@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\KtpController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('login');
+    return view('auth.login');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -32,6 +33,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/ktp/{id}', [KtpController::class, 'destroy'])->name('ktp.destroy');
 
     Route::post('/ktp/import', [KtpController::class, 'import'])->name('ktp.import');
+
+    Route::get('/activity-log', [ActivityLogController::class, 'index'])->name('activity.index');
 });
 
 Route::middleware(['auth'])->group(function () {

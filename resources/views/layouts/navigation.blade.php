@@ -21,6 +21,13 @@
                         {{ __('Data KTP') }}
                     </x-nav-link>
                 </div>
+                @if (isAdmin())
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('activity.index')" :active="request()->routeIs('activity.index')">
+                            {{ __('Activity Log') }}
+                        </x-nav-link>
+                    </div>
+                @endif
             </div>
 
             <!-- Settings Dropdown -->

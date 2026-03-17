@@ -1,59 +1,138 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📌 Aplikasi Manajemen Data KTP
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi ini merupakan sistem manajemen data KTP berbasis web yang dibangun menggunakan Laravel. Aplikasi ini dirancang untuk mengelola data penduduk dalam jumlah besar dengan fitur lengkap seperti CRUD, import/export data, API, serta pengaturan hak akses pengguna.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. CRUD Data KTP
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* Menampilkan, menambah, mengubah, dan menghapus data KTP
+* Upload foto penduduk
+* NIK digenerate otomatis (unik & random)
+* Umur dihitung otomatis berdasarkan tanggal lahir
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 2. Export Data
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* Export data ke format:
 
-## Laravel Sponsors
+  * CSV (untuk data besar)
+  * PDF (untuk laporan)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+### 3. Import Data
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+* Import data KTP melalui file CSV
+* Mendukung input data dalam jumlah besar
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. Data Besar (Big Data)
 
-## Code of Conduct
+* Mendukung minimal **10.000 data penduduk**
+* Optimasi performa menggunakan pagination
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+### 5. REST API (JSON)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* Menyediakan endpoint API:
 
-## License
+  * GET data KTP
+* Format response JSON
+* Siap digunakan untuk integrasi frontend / mobile
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+### 6. Hak Akses (Role Management)
+
+#### 👨‍💼 Admin
+
+* CRUD data KTP
+* Import data CSV
+* Export CSV & PDF
+* Melihat aktivitas user
+
+#### 👤 User
+
+* Melihat data KTP
+* Export data (CSV & PDF)
+* Tidak memiliki akses CRUD & import
+
+---
+
+### 7. Activity Log
+
+* Mencatat aktivitas user seperti:
+
+  * Login
+  * Export data
+  * Import data
+  * Perubahan data
+
+---
+
+## 🛠️ Teknologi yang Digunakan
+
+* Laravel
+* Laravel Breeze (Authentication)
+* Bootstrap (UI)
+* MySQL
+* DomPDF (Export PDF)
+
+---
+
+## 📦 Instalasi
+
+```bash
+git clone https://github.com/aldysufri17/bromindo_test.git
+cd ktp-app
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan storege:link
+php artisan migrate --seed
+php artisan serve
+```
+
+---
+
+## 🔐 Akun Default
+
+| Role  | Email                                   | Password |
+| ----- | --------------------------------------- | -------- |
+| Admin | [admin@gmail.com] | password |
+| User  | [user@gmail.com]  | password |
+
+---
+
+## 🌐 API Endpoint
+
+```http
+GET /api/ktp
+```
+
+Response:
+
+```json
+{
+  "status": true,
+  "data": [...]
+}
+```
+
+---
+
+## 📁 Struktur Fitur
+
+* CRUD KTP
+* Import CSV
+* Export CSV & PDF
+* API JSON
+* Activity Log
+
+---

@@ -36,7 +36,7 @@ class KtpController extends Controller
             $foto = $request->file('foto')->store('foto', 'public');
         }
 
-        Ktp::create([
+        $data = Ktp::create([
             'nik' => generateNik(),
             'nama' => $request->nama,
             'tanggal_lahir' => $request->tanggal_lahir,
@@ -44,6 +44,8 @@ class KtpController extends Controller
             'alamat' => $request->alamat,
             'foto' => $foto
         ]);
+
+        logActivity('Menambahkan data KTP: ' . $request->nama, $data);
 
         return redirect()->route('ktp.index');
     }
@@ -64,6 +66,7 @@ class KtpController extends Controller
     public function update(Request $request, $id)
     {
         $data = Ktp::findOrFail($id);
+        $old = $data->getOriginal();
         $umur = calculateAge($request->tanggal_lahir);
 
         $data->update([
@@ -73,6 +76,11 @@ class KtpController extends Controller
             'alamat' => $request->alamat
         ]);
 
+        $new = $data->getAttributes();
+
+        $changes = compareItems($old, $new);
+        logActivity('Update data KTP ID: ' . $id, $changes);
+
         return redirect()->route('ktp.index');
     }
 
@@ -80,11 +88,14 @@ class KtpController extends Controller
     {
         Ktp::destroy($id);
 
+        logActivity('Delete data KTP ID: ' . $id);
+
         return back();
     }
 
     public function exportCSV()
     {
+        logActivity('Export data CSV');
         return Excel::download(new KtpExport, 'data_ktp.csv');
     }
 
@@ -97,6 +108,7 @@ class KtpController extends Controller
         $data = Ktp::limit(100)->get();
         
         $pdf = Pdf::loadView('ktp.pdf', compact('data'));
+        logActivity('Export data PDF');
         return $pdf->download('data_ktp.pdf');
     }
 
@@ -107,6 +119,7 @@ class KtpController extends Controller
         ]);
 
         Excel::import(new KtpImport, $request->file('file'));
+        logActivity('Import data CSV');
 
         return redirect()->route('ktp.index')
             ->with('success', 'Data berhasil diimport');
