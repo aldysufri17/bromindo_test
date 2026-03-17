@@ -9,12 +9,13 @@ class KtpImport implements ToModel
 {
     public function model(array $row)
     {
+        $umur = calculateAge($row[2]);
         return new Ktp([
             'nik' => $row[0],
             'nama' => $row[1],
             'tanggal_lahir' => $row[2],
-            'umur' => $row[3],
-            'alamat' => $row[4],
+            'umur'  => $umur,
+            'alamat' => $row[3],
         ]);
     }
 }
